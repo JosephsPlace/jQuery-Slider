@@ -1,12 +1,15 @@
 (function ($) {
-   var papyrusSlide = function (element, custome_settings) {
+   var papyrusSlide = function (element, custom_settings) {
       var obj = this;
       var slider_interval = null;
-      var settings = {
-         slider_container: 'slider',
-         slider_class: '.slider',
-         slide_list: '.slider ul',
-         slides: '.slider ul li',
+
+      console.log(element.className);
+
+      var settings = $.extend({
+         slider_container: element.className,
+         slider_class: '.' + element.className,
+         slide_list: '.' + element.className + ' ul',
+         slides: '.' + element.className + ' ul li',
          auto_scroll: true,
          controls: true,
          tracker: true,
@@ -16,7 +19,7 @@
          interval: 2000,
          slide_speed: 500,
          slide_speed_fast: 200
-      };
+      }, custom_settings);
 
       obj.slide_count = $(settings.slides).length;
       obj.current_slide = 0;
@@ -35,7 +38,7 @@
       });
 
       if (settings.controls) {
-         $('.slider').after('<a class="control_prev">Prev</a> <a class="control_next">Next</a>');
+         $(settings.slider_class).after('<a class="control_prev">Prev</a> <a class="control_next">Next</a>');
       }
 
       if (settings.tracker) {
@@ -135,7 +138,7 @@
             }
          });
       };
-   }
+   };
 
    $.fn.papyrusSlide = function (settings) {
       return this.each(function () {
@@ -143,7 +146,7 @@
 
          if (element.data('papyrusSlide')) return;
 
-         var papyrusSlide = new papyrusSlide(this, settings);
+         var papyrusslide = new papyrusSlide(this, settings);
 
          element.data('papyrusSlide', papyrusSlide);
       });
